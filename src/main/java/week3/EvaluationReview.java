@@ -395,3 +395,49 @@ class MySingleton implements Cloneable, Serializable {
         return null;
     }
 }
+
+
+/**
+ *  Heap
+ *      young generation [eden area][s0][s1]
+ *      old generation   [                  ]
+ *      permanent generation(before java 8) -> meta space (after java 8, native heap)
+ *
+ *      new object -> eden area / old generation
+ *      minor GC / young GC -> copy to s0 / s1,  clean up previous area
+ *      major GC ->
+ *          CMS (concurrent mark and sweep)
+ *              1. initial mark (STW)
+ *              2. current mark
+ *              3. current remove ?
+ *              4. final clean up (STW)
+ *          Mark and Sweep + compact
+ *
+ *      G1
+ *          [][][][][][][][][]
+ *          [][][][][][][][][]
+ *          [][][][][][][][][]
+ *          [][][][][][][][][]
+ *          [][][][][][][][][]
+ *
+ *   Out of memory
+ *      1. re-start
+ *      2. assign larger old generation area
+ *      3. gc algorithm
+ *      4. Heap Dump file(Thread Dump file)
+ *         tools
+ *              Java mission control -> real time heap activity
+ *              Jprofiler
+ *              Memory analyzer
+ *         use diff tools -> analyze memory leak
+ *
+ *   Memory Leak
+ *      1. unclosed connection
+ *      2. static collection(insert / add)
+ *         no remove / delete func()
+ *
+ *
+ *
+ *
+ *
+ */
